@@ -5,13 +5,10 @@ import llama
 def clear_chat():
     st.session_state.messages = [{"role": "assistant", "content": "Say something to get started!"}]
 
-
 st.title("Llama2 Clarifai Tutorial")
-
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Say something to get started!"}]
-
 
 with st.form("chat_input", clear_on_submit=True):
     a, b = st.columns([4, 1])
@@ -24,13 +21,13 @@ with st.form("chat_input", clear_on_submit=True):
 
     b.form_submit_button("Send", use_container_width=True)
 
+# Add a unique key to the st.streamlit_chat.streamlit_chat widget
+chat_widget = st.streamlit_chat.streamlit_chat(key="unique_chat_key")
 
 for msg in st.session_state.messages:
     message(msg["content"], is_user=msg["role"] == "user")
 
-
 if user_prompt:
-
     print('user_prompt: ', user_prompt)
 
     st.session_state.messages.append({"role": "user", "content": user_prompt})
@@ -48,7 +45,6 @@ if user_prompt:
     print('msg.content: ', msg["content"])
 
     message(msg["content"])
-
 
 if len(st.session_state.messages) > 1:
     st.button('Clear Chat', on_click=clear_chat)
